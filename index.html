@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlitzMed - Emergency Medical Transport</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <meta name="description"
+        content="Professional ambulance services available 24/7. Quick response, advanced care, and safe transport when you need it most.">
+</head>
+
+<body>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <div class="logo">
+                    <div class="logo-inner">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                </div>
+                <h1>BlitzMed</h1>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <a href="#home" class="nav-link active" data-nav="home">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#services" class="nav-link" data-nav="services">
+                    <i class="fas fa-ambulance"></i>
+                    <span>Services</span>
+                </a>
+                <a href="#about" class="nav-link" data-nav="about">
+                    <i class="fas fa-info-circle"></i>
+                    <span>About</span>
+                </a>
+                <a href="#contact" class="nav-link" data-nav="contact">
+                    <i class="fas fa-phone"></i>
+                    <span>Contact</span>
+                </a>
+                <button id="authBtn" class="auth-btn">
+                    <i class="fas fa-user"></i>
+                    <span>Login</span>
+                </button>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="mainContent">
+        <!-- Home Section -->
+        <section id="home" class="hero">
+            <div class="hero-background">
+                <div class="hero-gradient"></div>
+                <div class="floating-elements">
+                    <div class="floating-element"></div>
+                    <div class="floating-element"></div>
+                    <div class="floating-element"></div>
+                </div>
+            </div>
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="hero-badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>24/7 Emergency Response</span>
+                    </div>
+                    <h1>Emergency Medical<br><span class="gradient-text">Transport</span></h1>
+                    <p>Professional ambulance services with advanced life support. When every second counts, trust
+                        BlitzMed for rapid response and expert care.</p>
+                    <div class="hero-actions">
+                        <button id="bookNowBtn" class="cta-btn primary">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>Book Ambulance</span>
+                        </button>
+                        <button class="cta-btn secondary" onclick="utils.scrollToSection('services')">
+                            <i class="fas fa-play"></i>
+                            <span>Learn More</span>
+                        </button>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">2000+</span>
+                            <span class="stat-label">Lives Saved</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">5min</span>
+                            <span class="stat-label">Avg Response</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">24/7</span>
+                            <span class="stat-label">Available</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="ambulance-container">
+                        <div class="ambulance-icon">
+                            <i class="fas fa-ambulance"></i>
+                        </div>
+                        <div class="pulse-rings">
+                            <div class="pulse-ring"></div>
+                            <div class="pulse-ring"></div>
+                            <div class="pulse-ring"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="services">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-badge">
+                        <i class="fas fa-medical-kit"></i>
+                        <span>Our Services</span>
+                    </div>
+                    <h2>Comprehensive Medical Transport</h2>
+                    <p>State-of-the-art ambulance services equipped with advanced medical technology and staffed by
+                        certified professionals.</p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card" data-service="als">
+                        <div class="service-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <div class="service-content">
+                            <h3>Advanced Life Support</h3>
+                            <p>ICU on wheels with paramedic staff, cardiac monitors, defibrillators, and advanced airway
+                                management for critical emergencies.</p>
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Cardiac monitoring</li>
+                                <li><i class="fas fa-check"></i> Advanced medications</li>
+                                <li><i class="fas fa-check"></i> Intubation capability</li>
+                            </ul>
+                        </div>
+                        <div class="service-overlay"></div>
+                    </div>
+                    <div class="service-card" data-service="bls">
+                        <div class="service-icon">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <div class="service-content">
+                            <h3>Basic Life Support</h3>
+                            <p>Non-critical patient transport with basic medical support, oxygen therapy, and trained
+                                EMT personnel.</p>
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Oxygen therapy</li>
+                                <li><i class="fas fa-check"></i> Basic monitoring</li>
+                                <li><i class="fas fa-check"></i> EMT certified staff</li>
+                            </ul>
+                        </div>
+                        <div class="service-overlay"></div>
+                    </div>
+                    <div class="service-card" data-service="transport">
+                        <div class="service-icon">
+                            <i class="fas fa-wheelchair"></i>
+                        </div>
+                        <div class="service-content">
+                            <h3>Patient Transport</h3>
+                            <p>Safe and comfortable transport for routine medical appointments, discharge, and
+                                non-emergency transfers.</p>
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Wheelchair accessible</li>
+                                <li><i class="fas fa-check"></i> Stretcher transport</li>
+                                <li><i class="fas fa-check"></i> Comfort care</li>
+                            </ul>
+                        </div>
+                        <div class="service-overlay"></div>
+                    </div>
+                    <div class="service-card" data-service="air">
+                        <div class="service-icon">
+                            <i class="fas fa-helicopter"></i>
+                        </div>
+                        <div class="service-content">
+                            <h3>Air Ambulance</h3>
+                            <p>Critical care transport via helicopter or aircraft for long-distance emergencies and
+                                time-sensitive situations.</p>
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Rapid deployment</li>
+                                <li><i class="fas fa-check"></i> Long distance</li>
+                                <li><i class="fas fa-check"></i> Critical care team</li>
+                            </ul>
+                        </div>
+                        <div class="service-overlay"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- Firebase SDK -->
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+        <!-- Main JavaScript -->
+        <script src="app.js"></script>
+
+</body>
+
+</html>
