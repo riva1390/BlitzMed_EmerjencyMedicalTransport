@@ -38,4 +38,19 @@ const elements = {
     bookingModal: document.getElementById('bookingModal'),
     dashboardModal: document.getElementById('dashboardModal'),
     loadingOverlay: document.getElementById('loadingOverlay'),
+  // Auth forms
+    loginForm: document.getElementById('loginForm'),
+    registerForm: document.getElementById('registerForm'),
+    loginFormEl: document.getElementById('loginFormEl'),
+    registerFormEl: document.getElementById('registerFormEl'),
+    showRegister: document.getElementById('showRegister'),
+    showLogin: document.getElementById('showLogin'),
+    
+    // Booking form
+    bookingForm: document.getElementById('bookingForm'),
+    bookNowBtn: document.getElementById('bookNowBtn'),
+    nextStepBtn: document.getElementById('nextStepBtn'),
+    prevStepBtn: document.getElementById('prevStepBtn'),
+    submitBookingBtn: document.getElementById('submitBookingBtn'),
+    
 }
