@@ -148,3 +148,14 @@ const utils = {
         const date = new Date(timestamp);
         return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
     },
+  // Validate email
+    validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    },
+
+    // Validate phone number
+    validatePhone(phone) {
+        const re = /^[\+]?[1-9][\d]{0,15}$/;
+        return re.test(phone.replace(/[\s\-\(\)]/g, ''));
+    },
