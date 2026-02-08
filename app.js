@@ -98,3 +98,47 @@ const utils = {
             document.body.style.overflow = '';
         }
     },
+   // Create and show toast notification
+    showToast(message, type = 'info', title = '') {
+        if (!elements.toastContainer) return;
+        
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        
+        const iconMap = {
+            success: 'fas fa-check',
+            error: 'fas fa-times',
+            warning: 'fas fa-exclamation-triangle',
+            info: 'fas fa-info'
+        };
+        
+        const titleMap = {
+            success: 'Success',
+            error: 'Error',
+            warning: 'Warning',
+            info: 'Information'
+        };
+        
+        toast.innerHTML = `
+            <div class="toast-icon">
+                <i class="${iconMap[type] || iconMap.info}"></i>
+            </div>
+            <div class="toast-content">
+                <div class="toast-title">${title || titleMap[type] || titleMap.info}</div>
+                <div class="toast-message">${message}</div>
+            </div>
+            <button class="toast-close" onclick="this.parentElement.remove()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="toast-progress"></div>
+        `;
+        
+        elements.toastContainer.appendChild(toast);
+        
+        // Auto remove after 5 seconds
+        setTimeout(() => {
+            if (toast.parentElement) {
+                toast.remove();
+            }
+        }, 5000);
+    },
