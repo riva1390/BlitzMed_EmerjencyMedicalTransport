@@ -429,7 +429,58 @@ body {
 .hamburger.active span:nth-child(2) {
     opacity: 0;
 }
+/* Hero Section */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 100px;
+}
 
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+.hero-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(220, 38, 38, 0.1) 0%, 
+        rgba(239, 68, 68, 0.05) 25%,
+        rgba(16, 185, 129, 0.05) 50%,
+        rgba(245, 158, 11, 0.05) 75%,
+        rgba(220, 38, 38, 0.1) 100%);
+}
+
+.floating-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+.floating-element {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: var(--gradient-glass);
+    border-radius: var(--radius-full);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    animation: float 6s ease-in-out infinite;
+}
 .hamburger.active span:nth-child(3) {
     transform: rotate(45deg) translate(-5px, -6px);
 }
