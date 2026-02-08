@@ -67,3 +67,34 @@ const elements = {
     toastContainer: document.getElementById('toastContainer')
     
 }
+// Utility Functions
+const utils = {
+    // Show loading overlay
+    showLoading() {
+        if (elements.loadingOverlay) {
+            elements.loadingOverlay.classList.add('active');
+        }
+    },
+
+    // Hide loading overlay
+    hideLoading() {
+        if (elements.loadingOverlay) {
+            elements.loadingOverlay.classList.remove('active');
+        }
+    },
+
+    // Open modal with animation
+    openModal(modal) {
+        if (modal) {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    },
+
+    // Close modal with animation
+    closeModal(modal) {
+        if (modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    },
