@@ -142,3 +142,9 @@ const utils = {
             }
         }, 5000);
     },
+  // Format timestamp
+    formatDate(timestamp) {
+        if (!timestamp) return 'Unknown';
+        const date = new Date(timestamp);
+        return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+    },
