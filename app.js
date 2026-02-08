@@ -52,5 +52,18 @@ const elements = {
     nextStepBtn: document.getElementById('nextStepBtn'),
     prevStepBtn: document.getElementById('prevStepBtn'),
     submitBookingBtn: document.getElementById('submitBookingBtn'),
+   // Dashboard
+    myBookingsTab: document.getElementById('myBookingsTab'),
+    adminPanelTab: document.getElementById('adminPanelTab'),
+    logoutBtn: document.getElementById('logoutBtn'),
+    myBookings: document.getElementById('myBookings'),
+    adminPanel: document.getElementById('adminPanel'),
+    bookingsList: document.getElementById('bookingsList'),
+    allBookingsList: document.getElementById('allBookingsList'),
+    statusFilter: document.getElementById('statusFilter'),
+    refreshDataBtn: document.getElementById('refreshDataBtn'),
+    
+    // Toast container
+    toastContainer: document.getElementById('toastContainer')
     
 }
