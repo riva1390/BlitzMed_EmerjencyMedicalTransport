@@ -582,6 +582,83 @@
                             </div>
                         </div>
                     </div>
+                     <!-- Step 4: Confirmation -->
+                    <div class="booking-step" data-step="4">
+                        <h3>Booking Confirmation</h3>
+                        <div class="booking-summary">
+                            <div class="summary-item">
+                                <strong>Patient:</strong> <span id="summaryPatient"></span>
+                            </div>
+                            <div class="summary-item">
+                                <strong>Contact:</strong> <span id="summaryContact"></span>
+                            </div>
+                            <div class="summary-item">
+                                <strong>Emergency Contact:</strong> <span id="summaryEmergencyContact"></span>
+                            </div>
+                            <div class="summary-item">
+                                <strong>From:</strong> <span id="summaryPickup"></span>
+                            </div>
+                            <div class="summary-item">
+                                <strong>To:</strong> <span id="summaryDestination"></span>
+                            </div>
+                            <div class="summary-item">
+                                <strong>Service:</strong> <span id="summaryService"></span>
+                            </div>
+                            <div class="summary-item">
+                                <strong>Urgency:</strong> <span id="summaryUrgency"></span>
+                            </div>
+                        </div>
+                        <div class="confirmation-notice">
+                            <i class="fas fa-info-circle"></i>
+                            <p>Your booking request will be processed immediately. You will receive a confirmation shortly with estimated arrival time.</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="prevStepBtn" class="btn secondary" style="display: none;">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Previous</span>
+                </button>
+                <button id="nextStepBtn" class="btn primary">
+                    <i class="fas fa-arrow-right"></i>
+                    <span>Next</span>
+                </button>
+                <button id="submitBookingBtn" class="btn primary" style="display: none;">
+                    <i class="fas fa-check"></i>
+                    <span>Confirm Booking</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Modal -->
+    <div id="dashboardModal" class="modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content dashboard-modal">
+            <div class="modal-header">
+                <h2>Dashboard</h2>
+                <button class="modal-close" onclick="utils.closeModal(elements.dashboardModal)">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="dashboard-tabs">
+                    <button id="myBookingsTab" class="tab-btn active">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>My Bookings</span>
+                    </button>
+                    <button id="adminPanelTab" class="tab-btn" style="display: none;">
+                        <i class="fas fa-cog"></i>
+                        <span>Admin Panel</span>
+                    </button>
+                    <button id="logoutBtn" class="tab-btn logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </button>
+                </div>
+
+
 
 
 
