@@ -254,4 +254,105 @@ const validation = {
         return isValid;
     }
 };
+// Authentication Functions
+const authFunctions = {
+    // Initialize auth state listener
+    initAuthStateListener() {
+        auth.onAuthStateChanged((user) => {
+            currentUser = user;
+            isAdmin = user && ADMIN_EMAILS.includes(user.email);
+            this.updateUI();
+        });
+    },
+
+    // Update UI based on auth state
+    updateUI() {
+        if (elements.authBtn) {
+            if (currentUser) {
+                elements.authBtn.innerHTML = `
+                    <i class="fas fa-user-circle"></i>
+                    <span>${currentUser.displayName || 'Dashboard'}</span>
+                `;
+            } else {
+                elements.authBtn.innerHTML = `
+                    <i class="fas fa-user"></i>
+                    <span>Login</span>
+                `;
+            }
+        }
+
+        // Show/hide admin panel tab
+        if (elements.adminPanelTab) {
+            elements.adminPanelTab.style.display = isAdmin ? 'flex' : 'none';
+        }
+    },
+
+    // Login user
+    async login(email, password) {
+        try {
+            utils.showLoading();
+            await auth.signInWithEmailAndPassword(email, password);
+            utils.closeModal(elements.authModal);
+            utils.showToast('Successfully logged in!', 'success');
+        } catch (error) {
+            utils.showToast(utils.getErrorMessage(error.code), 'error');
+        } finally {
+            utils.hideLoading();
+        }
+    },
+
+    // Register user
+    async register(name, email, password) {
+        try {
+            utils.showLoading();
+            const result = await auth.createUserWithEmailAndPassword(email, password);
+            
+            // Update profile with display name
+            await result.user.updateProfile({
+                displayName: name
+            });
+
+            // Save user data to database
+            await database.ref(`users/${result.user.uid}`).set({
+                name: name,
+                email: email,
+                createdAt: Date.now()
+            });
+
+            utils.closeModal(elements.authModal);
+            utils.showToast('Account created successfully!', 'success');
+        } catch (error) {
+            utils.showToast(utils.getErrorMessage(error.code), 'error');
+        } finally {
+            utils.hideLoading();
+        }
+    },
+
+    // Logout user
+    async logout() {
+        try {
+            await auth.signOut();
+            utils.closeModal(elements.dashboardModal);
+            utils.showToast('Successfully logged out!', 'info');
+        } catch (error) {
+            utils.showToast('Error logging out. Please try again.', 'error');
+        }
+    },
+
+    // Switch between login and register forms
+    switchForm(showRegister = true) {
+        if (elements.loginForm && elements.registerForm) {
+            if (showRegister) {
+                elements.loginForm.classList.remove('active');
+                elements.registerForm.classList.add('active');
+                document.querySelector('#authTitle').textContent = 'Create Account';
+            } else {
+                elements.registerForm.classList.remove('active');
+                elements.loginForm.classList.add('active');
+                document.querySelector('#authTitle').textContent = 'Welcome Back';
+            }
+        }
+    }
+};
+
 
