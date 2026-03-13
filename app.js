@@ -842,6 +842,193 @@ function initializeEventListeners() {
             authFunctions.logout();
         });
     }
+  // Refresh data button
+    if (elements.refreshDataBtn) {
+        elements.refreshDataBtn.addEventListener('click', () => {
+            dashboardFunctions.loadUserBookings();
+            if (isAdmin) {
+                dashboardFunctions.loadAllBookings();
+            }
+        });
+    }
+
+    // Service card click handlers
+    document.querySelectorAll('.service-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const serviceType = card.getAttribute('data-service');
+            openBookingWithService(serviceType);
+        });
+    });
+
+    // Emergency contact sharing handlers
+    const autoFillContactBtn = document.getElementById('autoFillContactBtn');
+    const shareContactBtn = document.getElementById('shareContactBtn');
+
+    if (autoFillContactBtn) {
+        autoFillContactBtn.addEventListener('click', () => {
+            autoFillEmergencyContact();
+        });
+    }
+
+    if (shareContactBtn) {
+        shareContactBtn.addEventListener('click', () => {
+            shareEmergencyContact();
+        });
+    }
+
+    // Close modals when clicking backdrop
+    document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
+        backdrop.addEventListener('click', (e) => {
+            const modal = e.target.closest('.modal');
+            if (modal) {
+                utils.closeModal(modal);
+            }
+        });
+    });
+
+    // Clear form errors on input
+    document.querySelectorAll('input, textarea').forEach(field => {
+        field.addEventListener('input', () => {
+            const inputField = field.closest('.input-field');
+            const errorElement = field.closest('.input-group')?.querySelector('.field-error');
+            
+            if (inputField) {
+                inputField.classList.remove('error');
+            }
+            if (errorElement) {
+                errorElement.textContent = '';
+            }
+        });
+    });
+}
+
+// Function to open booking modal with pre-selected service
+function openBookingWithService(serviceType) {
+    if (!currentUser) {
+        utils.openModal(elements.authModal);
+        utils.showToast('Please login to book an ambulance', 'info');
+        return;
+    }
+
+    utils.openModal(elements.bookingModal);
+    bookingFunctions.initBookingModal();
+    
+    // Pre-select the service type
+    setTimeout(() => {
+        const serviceRadios = document.querySelectorAll('input[name="serviceType"]');
+        serviceRadios.forEach(radio => {
+            const serviceOption = radio.closest('.service-option');
+            if (serviceOption && serviceOption.getAttribute('data-service') === serviceType) {
+                radio.checked = true;
+            }
+        });
+    }, 100); // Small delay to ensure modal is fully rendered
+}
+
+// Initialize the application
+function initializeApp() {
+    // Initialize Firebase auth state listener
+    authFunctions.initAuthStateListener();
+    
+    // Initialize event listeners
+    initializeEventListeners();
+    
+    // Hide loading overlay
+    utils.hideLoading();
+    
+    console.log('BlitzMed application initialized successfully');
+}
+
+// Emergency contact sharing functions
+function autoFillEmergencyContact() {
+    if (!currentUser) {
+        utils.showToast('Please login to use this feature', 'warning');
+        return;
+    }
+
+    const emergencyContactName = document.getElementById('emergencyContactName');
+    const emergencyContactPhone = document.getElementById('emergencyContactPhone');
+    
+    if (emergencyContactName && emergencyContactPhone) {
+        // Use the current user's name as default
+        emergencyContactName.value = currentUser.displayName || currentUser.email.split('@')[0];
+        
+        utils.showToast('Please update emergency contact phone number', 'info');
+        emergencyContactPhone.focus();
+    }
+}
+
+function shareEmergencyContact() {
+    const emergencyContactName = document.getElementById('emergencyContactName');
+    const emergencyContactPhone = document.getElementById('emergencyContactPhone');
+    const patientName = document.getElementById('patientName');
+    
+    if (!emergencyContactName?.value || !emergencyContactPhone?.value) {
+        utils.showToast('Please fill in emergency contact details first', 'warning');
+        return;
+    }
+
+    const contactInfo = `Emergency Contact for ${patientName?.value || 'Patient'}:
+Name: ${emergencyContactName.value}
+Phone: ${emergencyContactPhone.value}
+Time: ${new Date().toLocaleString()}`;
+
+    // Use Web Share API if available, otherwise copy to clipboard
+    if (navigator.share) {
+        navigator.share({
+            title: 'Emergency Contact Information',
+            text: contactInfo
+        }).then(() => {
+            utils.showToast('Contact information shared successfully', 'success');
+        }).catch(() => {
+            copyToClipboard(contactInfo);
+        });
+    } else {
+        copyToClipboard(contactInfo);
+    }
+}
+
+function copyToClipboard(text) {
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => {
+            utils.showToast('Contact information copied to clipboard', 'success');
+        }).catch(() => {
+            fallbackCopyToClipboard(text);
+        });
+    } else {
+        fallbackCopyToClipboard(text);
+    }
+}
+
+function fallbackCopyToClipboard(text) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    try {
+        document.execCommand('copy');
+        utils.showToast('Contact information copied to clipboard', 'success');
+    } catch (err) {
+        utils.showToast('Unable to copy contact information', 'error');
+    }
+    document.body.removeChild(textArea);
+}
+
+// Start the application when DOM is loaded
+document.addEventListener('DOMContentLoaded', initializeApp);
+
+// Global error handler
+window.addEventListener('error', (e) => {
+    console.error('Global error:', e.error);
+    utils.showToast('An unexpected error occurred. Please refresh the page.', 'error');
+});
+
+// Handle Firebase connection state
+database.ref('.info/connected').on('value', (snapshot) => {
+    if (snapshot.val() === false) {
+        utils.showToast('Connection lost. Please check your internet connection.', 'warning');
+    }
+});
 
 
 
