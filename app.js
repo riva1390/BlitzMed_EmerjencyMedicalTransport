@@ -534,5 +534,59 @@ const bookingFunctions = {
         }
     }
 };
+// Dashboard Functions
+const dashboardFunctions = {
+    // Load user bookings
+    async loadUserBookings() {
+        if (!currentUser || !elements.bookingsList) return;
+
+        try {
+            const snapshot = await database.ref('bookings')
+                .orderByChild('userId')
+                .equalTo(currentUser.uid)
+                .once('value');
+
+            const bookings = [];
+            snapshot.forEach(childSnapshot => {
+                bookings.push({
+                    id: childSnapshot.key,
+                    ...childSnapshot.val()
+                });
+            });
+
+            this.displayBookings(bookings, elements.bookingsList);
+        } catch (error) {
+            console.error('Error loading user bookings:', error);
+            utils.showToast('Failed to load bookings', 'error');
+        }
+    },
+
+    // Load all bookings (admin only)
+    async loadAllBookings() {
+        if (!isAdmin || !elements.allBookingsList) return;
+
+        try {
+            const snapshot = await database.ref('bookings').once('value');
+            const bookings = [];
+            
+            snapshot.forEach(childSnapshot => {
+                bookings.push({
+                    id: childSnapshot.key,
+                    ...childSnapshot.val()
+                });
+            });
+
+            // Apply status filter
+            const statusFilter = elements.statusFilter?.value;
+            const filteredBookings = statusFilter 
+                ? bookings.filter(booking => booking.status === statusFilter)
+                : bookings;
+
+            this.displayBookings(filteredBookings, elements.allBookingsList, true);
+        } catch (error) {
+            console.error('Error loading all bookings:', error);
+            utils.showToast('Failed to load bookings', 'error');
+        }
+    },
 
 
