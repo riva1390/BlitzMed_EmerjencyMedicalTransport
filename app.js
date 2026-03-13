@@ -159,3 +159,99 @@ const utils = {
         const re = /^[\+]?[1-9][\d]{0,15}$/;
         return re.test(phone.replace(/[\s\-\(\)]/g, ''));
     },
+  // Get error message for Firebase auth errors
+    getErrorMessage(errorCode) {
+        const errorMessages = {
+            'auth/user-not-found': 'No account found with this email address.',
+            'auth/wrong-password': 'Incorrect password. Please try again.',
+            'auth/email-already-in-use': 'An account with this email already exists.',
+            'auth/weak-password': 'Password should be at least 6 characters long.',
+            'auth/invalid-email': 'Please enter a valid email address.',
+            'auth/too-many-requests': 'Too many failed attempts. Please try again later.',
+            'auth/network-request-failed': 'Network error. Please check your connection.',
+            'default': 'An unexpected error occurred. Please try again.'
+        };
+        
+        return errorMessages[errorCode] || errorMessages.default;
+    },
+
+    // Smooth scroll to section
+    scrollToSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+            // Close mobile menu if open
+            if (elements.navMenu) elements.navMenu.classList.remove('active');
+            if (elements.hamburger) elements.hamburger.classList.remove('active');
+        }
+    }
+};
+
+// Form Validation
+const validation = {
+    // Validate single field
+    validateField(field, rules = {}) {
+        if (!field) return false;
+        
+        const value = field.value.trim();
+        const fieldName = field.id || field.name;
+        const errorElement = field.closest('.input-group')?.querySelector('.field-error');
+        
+        let isValid = true;
+        let errorMessage = '';
+        
+        // Required validation
+        if (rules.required && !value) {
+            isValid = false;
+            errorMessage = `${rules.label || fieldName} is required`;
+        }
+        
+        // Email validation
+        if (value && rules.email && !utils.validateEmail(value)) {
+            isValid = false;
+            errorMessage = 'Please enter a valid email address';
+        }
+        
+        // Phone validation
+        if (value && rules.phone && !utils.validatePhone(value)) {
+            isValid = false;
+            errorMessage = 'Please enter a valid phone number';
+        }
+        
+        // Min length validation
+        if (value && rules.minLength && value.length < rules.minLength) {
+            isValid = false;
+            errorMessage = `Minimum ${rules.minLength} characters required`;
+        }
+        
+        // Update UI
+        if (errorElement) {
+            errorElement.textContent = errorMessage;
+        }
+        
+        const inputField = field.closest('.input-field');
+        if (inputField) {
+            inputField.classList.toggle('error', !isValid);
+        }
+        
+        return isValid;
+    },
+
+    // Validate entire form
+    validateForm(form, rules) {
+        if (!form || !rules) return false;
+        
+        let isValid = true;
+        
+        Object.keys(rules).forEach(fieldId => {
+            const field = form.querySelector(`#${fieldId}`);
+            if (field) {
+                const fieldValid = this.validateField(field, rules[fieldId]);
+                if (!fieldValid) isValid = false;
+            }
+        });
+        
+        return isValid;
+    }
+};
+
