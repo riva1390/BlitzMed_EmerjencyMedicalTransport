@@ -354,5 +354,96 @@ const authFunctions = {
         }
     }
 };
+// Booking Functions
+const bookingFunctions = {
+    // Initialize booking modal
+    initBookingModal() {
+        this.updateBookingStep(1);
+    },
+
+    // Update booking step
+    updateBookingStep(step) {
+        currentBookingStep = step;
+        
+        // Update progress indicators
+        document.querySelectorAll('.progress-step').forEach((stepEl, index) => {
+            const stepNumber = index + 1;
+            stepEl.classList.toggle('active', stepNumber === step);
+            stepEl.classList.toggle('completed', stepNumber < step);
+        });
+
+        // Show/hide steps
+        document.querySelectorAll('.booking-step').forEach((stepEl, index) => {
+            const stepNumber = index + 1;
+            stepEl.classList.toggle('active', stepNumber === step);
+        });
+
+        // Update buttons
+        if (elements.prevStepBtn) {
+            elements.prevStepBtn.style.display = step > 1 ? 'flex' : 'none';
+        }
+        if (elements.nextStepBtn) {
+            elements.nextStepBtn.style.display = step < 4 ? 'flex' : 'none';
+        }
+        if (elements.submitBookingBtn) {
+            elements.submitBookingBtn.style.display = step === 4 ? 'flex' : 'none';
+        }
+
+        // Update summary on step 4
+        if (step === 4) {
+            this.updateBookingSummary();
+        }
+    },
+
+    // Validate current step
+    validateCurrentStep() {
+        const currentStepEl = document.querySelector(`.booking-step[data-step="${currentBookingStep}"]`);
+        if (!currentStepEl) return false;
+
+        const requiredFields = currentStepEl.querySelectorAll('input[required], select[required]');
+        let isValid = true;
+
+        requiredFields.forEach(field => {
+            if (!field.value.trim()) {
+                isValid = false;
+                const inputField = field.closest('.input-field');
+                if (inputField) {
+                    inputField.classList.add('error');
+                }
+                const errorElement = field.closest('.input-group')?.querySelector('.field-error');
+                if (errorElement) {
+                    errorElement.textContent = 'This field is required';
+                }
+            }
+        });
+
+        // Validate radio buttons
+        const radioGroups = currentStepEl.querySelectorAll('input[type="radio"]');
+        const radioGroupNames = [...new Set([...radioGroups].map(r => r.name))];
+        
+        radioGroupNames.forEach(name => {
+            const selectedRadio = currentStepEl.querySelector(`input[name="${name}"]:checked`);
+            if (!selectedRadio) {
+                isValid = false;
+                utils.showToast('Please make a selection', 'warning');
+            }
+        });
+
+        return isValid;
+    },
+
+    // Go to next step
+    nextStep() {
+        if (this.validateCurrentStep() && currentBookingStep < 4) {
+            this.updateBookingStep(currentBookingStep + 1);
+        }
+    },
+
+    // Go to previous step
+    prevStep() {
+        if (currentBookingStep > 1) {
+            this.updateBookingStep(currentBookingStep - 1);
+        }
+    },
 
 
