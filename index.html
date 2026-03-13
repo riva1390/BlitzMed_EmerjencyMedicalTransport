@@ -396,6 +396,37 @@
             </div>
         </div>
     </div>
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content booking-modal">
+            <div class="modal-header">
+                <h2>Book Ambulance Service</h2>
+                <button class="modal-close" onclick="utils.closeModal(elements.bookingModal)">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="booking-progress">
+                    <div class="progress-step active" data-step="1">
+                        <div class="step-icon"><i class="fas fa-user"></i></div>
+                        <span>Patient Info</span>
+                    </div>
+                    <div class="progress-step" data-step="2">
+                        <div class="step-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <span>Location</span>
+                    </div>
+                    <div class="progress-step" data-step="3">
+                        <div class="step-icon"><i class="fas fa-ambulance"></i></div>
+                        <span>Service</span>
+                    </div>
+                    <div class="progress-step" data-step="4">
+                        <div class="step-icon"><i class="fas fa-check"></i></div>
+                        <span>Confirm</span>
+                    </div>
+                </div>
+
+                <form id="bookingForm">
 
 
 
