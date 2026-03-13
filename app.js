@@ -713,5 +713,52 @@ function togglePassword(fieldId) {
         toggle.innerHTML = `<i class="fas fa-eye${isPassword ? '-slash' : ''}"></i>`;
     }
 }
+// Event Listeners
+function initializeEventListeners() {
+    // Navigation scroll effect
+    window.addEventListener('scroll', () => {
+        if (elements.navbar) {
+            if (window.scrollY > 100) {
+                elements.navbar.classList.add('scrolled');
+            } else {
+                elements.navbar.classList.remove('scrolled');
+            }
+        }
+    });
+
+    // Mobile navigation toggle
+    if (elements.hamburger) {
+        elements.hamburger.addEventListener('click', () => {
+            elements.navMenu?.classList.toggle('active');
+            elements.hamburger.classList.toggle('active');
+        });
+    }
+
+    // Navigation links
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const href = link.getAttribute('href');
+            if (href?.startsWith('#')) {
+                utils.scrollToSection(href.substring(1));
+            }
+            
+            // Update active state
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+        });
+    });
+
+    // Auth button
+    if (elements.authBtn) {
+        elements.authBtn.addEventListener('click', () => {
+            if (currentUser) {
+                utils.openModal(elements.dashboardModal);
+                dashboardFunctions.switchTab('myBookings');
+            } else {
+                utils.openModal(elements.authModal);
+            }
+        });
+    }
 
 
