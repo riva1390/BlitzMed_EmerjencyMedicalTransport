@@ -760,5 +760,88 @@ function initializeEventListeners() {
             }
         });
     }
+  // Book now button
+    if (elements.bookNowBtn) {
+        elements.bookNowBtn.addEventListener('click', () => {
+            if (currentUser) {
+                utils.openModal(elements.bookingModal);
+                bookingFunctions.initBookingModal();
+            } else {
+                utils.showToast('Please login to book an ambulance', 'warning');
+                utils.openModal(elements.authModal);
+            }
+        });
+    }
+
+    // Auth form switches
+    if (elements.showRegister) {
+        elements.showRegister.addEventListener('click', () => {
+            authFunctions.switchForm(true);
+        });
+    }
+    if (elements.showLogin) {
+        elements.showLogin.addEventListener('click', () => {
+            authFunctions.switchForm(false);
+        });
+    }
+
+    // Auth form submissions
+    if (elements.loginFormEl) {
+        elements.loginFormEl.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail')?.value;
+            const password = document.getElementById('loginPassword')?.value;
+            if (email && password) {
+                await authFunctions.login(email, password);
+            }
+        });
+    }
+
+    if (elements.registerFormEl) {
+        elements.registerFormEl.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('registerName')?.value;
+            const email = document.getElementById('registerEmail')?.value;
+            const password = document.getElementById('registerPassword')?.value;
+            if (name && email && password) {
+                await authFunctions.register(name, email, password);
+            }
+        });
+    }
+
+    // Booking form navigation
+    if (elements.nextStepBtn) {
+        elements.nextStepBtn.addEventListener('click', () => {
+            bookingFunctions.nextStep();
+        });
+    }
+    if (elements.prevStepBtn) {
+        elements.prevStepBtn.addEventListener('click', () => {
+            bookingFunctions.prevStep();
+        });
+    }
+    if (elements.submitBookingBtn) {
+        elements.submitBookingBtn.addEventListener('click', () => {
+            bookingFunctions.submitBooking();
+        });
+    }
+
+    // Dashboard tabs
+    if (elements.myBookingsTab) {
+        elements.myBookingsTab.addEventListener('click', () => {
+            dashboardFunctions.switchTab('myBookings');
+        });
+    }
+    if (elements.adminPanelTab) {
+        elements.adminPanelTab.addEventListener('click', () => {
+            dashboardFunctions.switchTab('adminPanel');
+        });
+    }
+    if (elements.logoutBtn) {
+        elements.logoutBtn.addEventListener('click', () => {
+            authFunctions.logout();
+        });
+    }
+
 
 
