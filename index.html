@@ -502,6 +502,86 @@
                             <div class="field-error"></div>
                         </div>
                     </div>
+                    <!-- Step 3: Service Selection -->
+                    <div class="booking-step" data-step="3">
+                        <h3>Service Selection</h3>
+                        <div class="service-selection">
+                            <div class="service-option" data-service="als">
+                                <input type="radio" id="serviceALS" name="serviceType" value="Advanced Life Support">
+                                <label for="serviceALS">
+                                    <div class="service-info">
+                                        <div class="service-icon"><i class="fas fa-heartbeat"></i></div>
+                                        <div class="service-details">
+                                            <h4>Advanced Life Support</h4>
+                                            <p>ICU on wheels with paramedic staff and advanced equipment</p>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="service-option" data-service="bls">
+                                <input type="radio" id="serviceBLS" name="serviceType" value="Basic Life Support">
+                                <label for="serviceBLS">
+                                    <div class="service-info">
+                                        <div class="service-icon"><i class="fas fa-user-md"></i></div>
+                                        <div class="service-details">
+                                            <h4>Basic Life Support</h4>
+                                            <p>Non-critical patient transport with basic medical support</p>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="service-option" data-service="transport">
+                                <input type="radio" id="serviceTransport" name="serviceType" value="Patient Transport">
+                                <label for="serviceTransport">
+                                    <div class="service-info">
+                                        <div class="service-icon"><i class="fas fa-wheelchair"></i></div>
+                                        <div class="service-details">
+                                            <h4>Patient Transport</h4>
+                                            <p>Safe transport for routine appointments and transfers</p>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="service-option" data-service="air">
+                                <input type="radio" id="serviceAir" name="serviceType" value="Air Ambulance">
+                                <label for="serviceAir">
+                                    <div class="service-info">
+                                        <div class="service-icon"><i class="fas fa-helicopter"></i></div>
+                                        <div class="service-details">
+                                            <h4>Air Ambulance</h4>
+                                            <p>Emergency helicopter transport for critical cases and remote areas</p>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Urgency Level *</label>
+                            <div class="urgency-selection">
+                                <div class="urgency-option" data-urgency="emergency">
+                                    <input type="radio" id="urgencyEmergency" name="urgencyLevel" value="Emergency">
+                                    <label for="urgencyEmergency">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        <span>Emergency</span>
+                                    </label>
+                                </div>
+                                <div class="urgency-option" data-urgency="urgent">
+                                    <input type="radio" id="urgencyUrgent" name="urgencyLevel" value="Urgent">
+                                    <label for="urgencyUrgent">
+                                        <i class="fas fa-clock"></i>
+                                        <span>Urgent</span>
+                                    </label>
+                                </div>
+                                <div class="urgency-option" data-urgency="scheduled">
+                                    <input type="radio" id="urgencyScheduled" name="urgencyLevel" value="Scheduled">
+                                    <label for="urgencyScheduled">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>Scheduled</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
 
