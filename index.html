@@ -427,6 +427,61 @@
                 </div>
 
                 <form id="bookingForm">
+                    <!-- Step 1: Patient Information -->
+                    <div class="booking-step active" data-step="1">
+                        <h3>Patient Information</h3>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Patient Name *</label>
+                                <div class="input-field">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="patientName" placeholder="Full Name" required>
+                                </div>
+                                <div class="field-error"></div>
+                            </div>
+                            <div class="input-group">
+                                <label>Contact Number *</label>
+                                <div class="input-field">
+                                    <i class="fas fa-phone"></i>
+                                    <input type="tel" id="contactNumber" placeholder="Phone Number" required>
+                                </div>
+                                <div class="field-error"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label>Emergency Contact Name</label>
+                                <div class="input-field">
+                                    <i class="fas fa-user-friends"></i>
+                                    <input type="text" id="emergencyContactName" placeholder="Contact person name">
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label>Emergency Contact Phone</label>
+                                <div class="input-field">
+                                    <i class="fas fa-phone-alt"></i>
+                                    <input type="tel" id="emergencyContactPhone" placeholder="Emergency contact number">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="emergency-actions">
+                            <button type="button" class="btn-outline" id="autoFillContactBtn">
+                                <i class="fas fa-user-plus"></i>
+                                Auto-fill from Profile
+                            </button>
+                            <button type="button" class="btn-outline" id="shareContactBtn">
+                                <i class="fas fa-share"></i>
+                                Share Contact Info
+                            </button>
+                        </div>
+                        <div class="input-group">
+                            <label>Medical Notes (Optional)</label>
+                            <div class="input-field">
+                                <i class="fas fa-notes-medical"></i>
+                                <textarea id="medicalNotes" placeholder="Any specific medical information or requirements"></textarea>
+                            </div>
+                        </div>
+                    </div>
 
 
 
