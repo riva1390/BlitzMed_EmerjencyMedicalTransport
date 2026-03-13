@@ -445,5 +445,48 @@ const bookingFunctions = {
             this.updateBookingStep(currentBookingStep - 1);
         }
     },
+  // Update booking summary
+    updateBookingSummary() {
+        const form = elements.bookingForm;
+        if (!form) return;
+
+        const summaryElements = {
+            summaryPatient: document.getElementById('summaryPatient'),
+            summaryContact: document.getElementById('summaryContact'),
+            summaryEmergencyContact: document.getElementById('summaryEmergencyContact'),
+            summaryPickup: document.getElementById('summaryPickup'),
+            summaryDestination: document.getElementById('summaryDestination'),
+            summaryService: document.getElementById('summaryService'),
+            summaryUrgency: document.getElementById('summaryUrgency')
+        };
+
+        // Update summary values
+        if (summaryElements.summaryPatient) {
+            summaryElements.summaryPatient.textContent = form.patientName?.value || 'N/A';
+        }
+        if (summaryElements.summaryContact) {
+            summaryElements.summaryContact.textContent = form.contactNumber?.value || 'N/A';
+        }
+        if (summaryElements.summaryEmergencyContact) {
+            const emergencyName = form.emergencyContactName?.value || '';
+            const emergencyPhone = form.emergencyContactPhone?.value || '';
+            const contactInfo = emergencyName && emergencyPhone ? `${emergencyName} (${emergencyPhone})` : 'Not provided';
+            summaryElements.summaryEmergencyContact.textContent = contactInfo;
+        }
+        if (summaryElements.summaryPickup) {
+            summaryElements.summaryPickup.textContent = form.pickupLocation?.value || 'N/A';
+        }
+        if (summaryElements.summaryDestination) {
+            summaryElements.summaryDestination.textContent = form.destination?.value || 'N/A';
+        }
+        if (summaryElements.summaryService) {
+            const selectedService = form.querySelector('input[name="serviceType"]:checked');
+            summaryElements.summaryService.textContent = selectedService?.value || 'N/A';
+        }
+        if (summaryElements.summaryUrgency) {
+            const selectedUrgency = form.querySelector('input[name="urgencyLevel"]:checked');
+            summaryElements.summaryUrgency.textContent = selectedUrgency?.value || 'N/A';
+        }
+    },
 
 
