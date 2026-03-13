@@ -661,5 +661,57 @@ const dashboardFunctions = {
             </div>
         `).join('');
     },
+      // Update booking status (admin only)
+    async updateBookingStatus(bookingId, newStatus) {
+        if (!isAdmin) return;
+
+        try {
+            await database.ref(`bookings/${bookingId}`).update({
+                status: newStatus,
+                updatedAt: Date.now()
+            });
+
+            utils.showToast('Booking status updated successfully', 'success');
+            this.loadAllBookings(); // Refresh the list
+        } catch (error) {
+            console.error('Error updating booking status:', error);
+            utils.showToast('Failed to update booking status', 'error');
+        }
+    },
+
+    // Switch dashboard tabs
+    switchTab(tabName) {
+        // Update tab buttons
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.getElementById(`${tabName}Tab`)?.classList.add('active');
+
+        // Update tab contents
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
+        });
+        document.getElementById(tabName)?.classList.add('active');
+
+        // Load data for active tab
+        if (tabName === 'myBookings') {
+            this.loadUserBookings();
+        } else if (tabName === 'adminPanel' && isAdmin) {
+            this.loadAllBookings();
+        }
+    }
+};
+
+// Toggle password visibility
+function togglePassword(fieldId) {
+    const field = document.getElementById(fieldId);
+    const toggle = field?.nextElementSibling;
+    
+    if (field && toggle) {
+        const isPassword = field.type === 'password';
+        field.type = isPassword ? 'text' : 'password';
+        toggle.innerHTML = `<i class="fas fa-eye${isPassword ? '-slash' : ''}"></i>`;
+    }
+}
 
 
