@@ -488,5 +488,51 @@ const bookingFunctions = {
             summaryElements.summaryUrgency.textContent = selectedUrgency?.value || 'N/A';
         }
     },
+  // Submit booking
+    async submitBooking() {
+        if (!currentUser) {
+            utils.showToast('Please login to book an ambulance', 'warning');
+            return;
+        }
+
+        const form = elements.bookingForm;
+        if (!form) return;
+
+        try {
+            utils.showLoading();
+
+            const bookingData = {
+                patientName: form.patientName?.value || '',
+                contactNumber: form.contactNumber?.value || '',
+                pickupLocation: form.pickupLocation?.value || '',
+                destination: form.destination?.value || '',
+                serviceType: form.querySelector('input[name="serviceType"]:checked')?.value || '',
+                urgencyLevel: form.querySelector('input[name="urgencyLevel"]:checked')?.value || '',
+                medicalNotes: form.medicalNotes?.value || '',
+                userId: currentUser.uid,
+                userEmail: currentUser.email,
+                status: 'pending',
+                createdAt: Date.now()
+            };
+
+            // Save to database
+            const bookingRef = database.ref('bookings').push();
+            await bookingRef.set(bookingData);
+
+            utils.closeModal(elements.bookingModal);
+            utils.showToast('Booking submitted successfully! You will receive confirmation shortly.', 'success');
+            
+            // Reset form
+            form.reset();
+            this.updateBookingStep(1);
+
+        } catch (error) {
+            console.error('Booking submission error:', error);
+            utils.showToast('Failed to submit booking. Please try again.', 'error');
+        } finally {
+            utils.hideLoading();
+        }
+    }
+};
 
 
