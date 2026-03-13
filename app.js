@@ -588,5 +588,78 @@ const dashboardFunctions = {
             utils.showToast('Failed to load bookings', 'error');
         }
     },
+ // Display bookings in list
+    displayBookings(bookings, container, isAdmin = false) {
+        if (!container) return;
+
+        if (bookings.length === 0) {
+            container.innerHTML = `
+                <div class="no-bookings">
+                    <i class="fas fa-calendar-times"></i>
+                    <h4>No bookings found</h4>
+                    <p>${isAdmin ? 'No bookings match the current filter.' : 'You haven\'t made any ambulance bookings yet.'}</p>
+                </div>
+            `;
+            return;
+        }
+
+        // Sort bookings by creation date (newest first)
+        bookings.sort((a, b) => b.createdAt - a.createdAt);
+
+        container.innerHTML = bookings.map(booking => `
+            <div class="booking-item">
+                <div class="booking-header">
+                    <div class="booking-info">
+                        <h4>${booking.patientName}</h4>
+                        <p>Booking ID: ${booking.id}</p>
+                    </div>
+                    <span class="booking-status ${booking.status}">${booking.status}</span>
+                </div>
+                <div class="booking-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Contact</span>
+                        <span class="detail-value">${booking.contactNumber}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">From</span>
+                        <span class="detail-value">${booking.pickupLocation}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">To</span>
+                        <span class="detail-value">${booking.destination}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Service</span>
+                        <span class="detail-value">${booking.serviceType}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Urgency</span>
+                        <span class="detail-value">${booking.urgencyLevel}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Created</span>
+                        <span class="detail-value">${utils.formatDate(booking.createdAt)}</span>
+                    </div>
+                    ${isAdmin ? `
+                        <div class="detail-item">
+                            <span class="detail-label">User</span>
+                            <span class="detail-value">${booking.userEmail}</span>
+                        </div>
+                    ` : ''}
+                </div>
+                ${isAdmin ? `
+                    <div class="booking-actions">
+                        <select onchange="dashboardFunctions.updateBookingStatus('${booking.id}', this.value)" class="filter-select">
+                            <option value="pending" ${booking.status === 'pending' ? 'selected' : ''}>Pending</option>
+                            <option value="confirmed" ${booking.status === 'confirmed' ? 'selected' : ''}>Confirmed</option>
+                            <option value="in-progress" ${booking.status === 'in-progress' ? 'selected' : ''}>In Progress</option>
+                            <option value="completed" ${booking.status === 'completed' ? 'selected' : ''}>Completed</option>
+                            <option value="cancelled" ${booking.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
+                        </select>
+                    </div>
+                ` : ''}
+            </div>
+        `).join('');
+    },
 
 
