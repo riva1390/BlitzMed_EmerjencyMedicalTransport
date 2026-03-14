@@ -1,13 +1,14 @@
 
 // Firebase Configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyACKve5Ki2K4XyeS8gRSJDEQFeQ8qwCGiU",
-  authDomain: "blitzmed-ambulance-1154.firebaseapp.com",
-  databaseURL: "https://blitzmed-ambulance-1154-default-rtdb.firebaseio.com",
-  projectId: "blitzmed-ambulance-1154",
-  storageBucket: "blitzmed-ambulance-1154.firebasestorage.app",
-  messagingSenderId: "89162718281",
-  appId: "1:89162718281:web:c7c0f0d995ef0b77a6f398"
+  apiKey: "AIzaSyBfYhWAFp9_BEmj6fRxKWL0M39OPIEAySY",
+  authDomain: "blitzmed-7796c.firebaseapp.com",
+  databaseURL: "https://blitzmed-7796c-default-rtdb.firebaseio.com",
+  projectId: "blitzmed-7796c",
+  storageBucket: "blitzmed-7796c.firebasestorage.app",
+  messagingSenderId: "120016036904",
+  appId: "1:120016036904:web:3b8b9dc65a6c99dab5011d",
+  measurementId: "G-KR35MLVT24"
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
