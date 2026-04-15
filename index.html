@@ -9,6 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <meta name="description"
         content="Professional ambulance services available 24/7. Quick response, advanced care, and safe transport when you need it most.">
 </head>
@@ -207,7 +208,8 @@
                 </div>
             </div>
         </section>
-              <!-- About Section -->
+
+        <!-- About Section -->
         <section id="about" class="about">
             <div class="container">
                 <div class="about-content">
@@ -217,7 +219,8 @@
                             <span>Why Choose Us</span>
                         </div>
                         <h2>Excellence in Emergency Care</h2>
-                        <p>With over a decade of experience in emergency medical services, BlitzMed has become the trusted choice for hospitals, healthcare facilities, and individuals across the region.</p>
+                        <p>With over a decade of experience in emergency medical services, BlitzMed has become the
+                            trusted choice for hospitals, healthcare facilities, and individuals across the region.</p>
                         <div class="about-features">
                             <div class="feature-item">
                                 <div class="feature-icon">
@@ -234,7 +237,8 @@
                                 </div>
                                 <div class="feature-content">
                                     <h4>Certified Professionals</h4>
-                                    <p>All staff are certified EMTs and Paramedics with ongoing training and education.</p>
+                                    <p>All staff are certified EMTs and Paramedics with ongoing training and education.
+                                    </p>
                                 </div>
                             </div>
                             <div class="feature-item">
@@ -243,7 +247,8 @@
                                 </div>
                                 <div class="feature-content">
                                     <h4>Insurance Accepted</h4>
-                                    <p>We work with all major insurance providers and offer flexible payment options.</p>
+                                    <p>We work with all major insurance providers and offer flexible payment options.
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -311,6 +316,7 @@
             </div>
         </section>
     </main>
+
     <!-- Auth Modal -->
     <div id="authModal" class="modal">
         <div class="modal-backdrop"></div>
@@ -351,6 +357,7 @@
                         <p>Don't have an account? <button id="showRegister" class="link-btn">Create one</button></p>
                     </div>
                 </div>
+
                 <!-- Register Form -->
                 <div id="registerForm" class="auth-form">
                     <form id="registerFormEl">
@@ -372,7 +379,8 @@
                             <div class="input-field">
                                 <i class="fas fa-lock"></i>
                                 <input type="password" id="registerPassword" placeholder="Password" required>
-                                <button type="button" class="password-toggle" onclick="togglePassword('registerPassword')">
+                                <button type="button" class="password-toggle"
+                                    onclick="togglePassword('registerPassword')">
                                     <i class="fas fa-eye"></i>
                                 </button>
                             </div>
@@ -396,6 +404,7 @@
             </div>
         </div>
     </div>
+
     <!-- Booking Modal -->
     <div id="bookingModal" class="modal">
         <div class="modal-backdrop"></div>
@@ -478,18 +487,24 @@
                             <label>Medical Notes (Optional)</label>
                             <div class="input-field">
                                 <i class="fas fa-notes-medical"></i>
-                                <textarea id="medicalNotes" placeholder="Any specific medical information or requirements"></textarea>
+                                <textarea id="medicalNotes"
+                                    placeholder="Any specific medical information or requirements"></textarea>
                             </div>
                         </div>
                     </div>
-                     <!-- Step 2: Location Details -->
+
+                    <!-- Step 2: Location Details -->
                     <div class="booking-step" data-step="2">
                         <h3>Location Details</h3>
                         <div class="input-group">
                             <label>Pickup Location *</label>
                             <div class="input-field">
                                 <i class="fas fa-map-marker-alt"></i>
-                                <input type="text" id="pickupLocation" placeholder="Street address, city, state" required>
+                                <input type="text" id="pickupLocation" placeholder="Street address, city, state"
+                                    required>
+                                <button type="button" class="map-select-btn" id="pickupMapBtn">
+                                    <i class="fas fa-map"></i>
+                                </button>
                             </div>
                             <div class="field-error"></div>
                         </div>
@@ -497,11 +512,16 @@
                             <label>Destination *</label>
                             <div class="input-field">
                                 <i class="fas fa-hospital"></i>
-                                <input type="text" id="destination" placeholder="Hospital or destination address" required>
+                                <input type="text" id="destination" placeholder="Hospital or destination address"
+                                    required>
+                                <button type="button" class="map-select-btn" id="destinationMapBtn">
+                                    <i class="fas fa-map"></i>
+                                </button>
                             </div>
                             <div class="field-error"></div>
                         </div>
                     </div>
+
                     <!-- Step 3: Service Selection -->
                     <div class="booking-step" data-step="3">
                         <h3>Service Selection</h3>
@@ -582,7 +602,8 @@
                             </div>
                         </div>
                     </div>
-                     <!-- Step 4: Confirmation -->
+
+                    <!-- Step 4: Confirmation -->
                     <div class="booking-step" data-step="4">
                         <h3>Booking Confirmation</h3>
                         <div class="booking-summary">
@@ -610,7 +631,8 @@
                         </div>
                         <div class="confirmation-notice">
                             <i class="fas fa-info-circle"></i>
-                            <p>Your booking request will be processed immediately. You will receive a confirmation shortly with estimated arrival time.</p>
+                            <p>Your booking request will be processed immediately. You will receive a confirmation
+                                shortly with estimated arrival time.</p>
                         </div>
                     </div>
                 </form>
@@ -632,6 +654,42 @@
         </div>
     </div>
 
+    <!-- Map Selection Modal -->
+    <div id="mapModal" class="modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content map-modal">
+            <div class="modal-header">
+                <h2 id="mapModalTitle">Select Location</h2>
+                <button class="modal-close" onclick="utils.closeModal(elements.mapModal)">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="map-container">
+                    <div id="map" style="height: 400px;"></div>
+                </div>
+                <div class="map-controls">
+                    <div class="input-group">
+                        <label>Search Location</label>
+                        <div class="input-field">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="mapSearch" placeholder="Search for a location">
+                            <button type="button" class="search-btn" id="mapSearchBtn">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="confirmLocationBtn" class="btn primary">
+                    <i class="fas fa-check"></i>
+                    <span>Confirm Location</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Dashboard Modal -->
     <div id="dashboardModal" class="modal">
         <div class="modal-backdrop"></div>
@@ -648,6 +706,10 @@
                         <i class="fas fa-calendar-alt"></i>
                         <span>My Bookings</span>
                     </button>
+                    <button id="routesTab" class="tab-btn">
+                        <i class="fas fa-route"></i>
+                        <span>Routes</span>
+                    </button>
                     <button id="adminPanelTab" class="tab-btn" style="display: none;">
                         <i class="fas fa-cog"></i>
                         <span>Admin Panel</span>
@@ -657,7 +719,8 @@
                         <span>Logout</span>
                     </button>
                 </div>
-                                <!-- My Bookings Tab -->
+
+                <!-- My Bookings Tab -->
                 <div id="myBookings" class="tab-content active">
                     <div class="tab-header">
                         <h3>My Bookings</h3>
@@ -671,6 +734,33 @@
                             <i class="fas fa-calendar-times"></i>
                             <h4>No bookings found</h4>
                             <p>You haven't made any ambulance bookings yet.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Routes Tab -->
+                <div id="routes" class="tab-content">
+                    <div class="tab-header">
+                        <h3>Route Visualization</h3>
+                        <select id="routeBookingSelect" class="filter-select">
+                            <option value="">Select a booking</option>
+                        </select>
+                    </div>
+                    <div class="route-container">
+                        <div id="routeMap" style="height: 400px; margin-bottom: 20px;"></div>
+                        <div class="route-info">
+                            <div class="route-details">
+                                <h4>Route Information</h4>
+                                <div class="detail-item">
+                                    <strong>Distance:</strong> <span id="routeDistance">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Estimated Time:</strong> <span id="routeTime">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <strong>Status:</strong> <span id="routeStatus">-</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -702,20 +792,16 @@
         </div>
     </div>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
+    <!-- Leaflet Maps -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-
-
-
-
-
-        <!-- Firebase SDK -->
-        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-
-        <!-- Main JavaScript -->
-        <script src="app.js"></script>
+    <!-- Main JavaScript -->
+    <script src="app.js"></script>
 
 </body>
 
